@@ -1,1 +1,1 @@
-# cmsc495
+# Weather Vane Application
