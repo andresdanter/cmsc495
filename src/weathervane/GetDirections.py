@@ -11,7 +11,7 @@ import datetime
 #	user is passing through them) in order to eventually query OpenWeatherAPI and forcast
 
 def get_directions(loc_a, loc_b, time):
-	gmaps = googlemaps.Client(key='AIzaSyAOmofR5lI4E-wrJQEVaFN4SenkaEICPok')
+	gmaps = googlemaps.Client(key='xxxx')
 	
 	#	Geocode the locations given by the user to long and lats
 	geocode_loc_a = gmaps.geocode(loc_a)
