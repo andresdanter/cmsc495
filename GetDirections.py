@@ -75,5 +75,3 @@ def get_directions(loc_a, loc_b, time):
 	results_dict['results'] = updated_results
 	
 	return results_dict
-	
-print(get_directions('46346 Summerhill Place, Sterling, VA 20165', '5511 Staunton Ave. SE, Charleston, WV 25304', datetime.datetime.now()))
