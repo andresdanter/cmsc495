@@ -195,11 +195,11 @@ def getTravelcast(route):
 			temp_lat_lon = [i[1], i[2]]
 	
 	results.append({
-		'Trip Leg': parseLatLong(temp_lat_lon[0], temp_lat_lon[1]) + ' to ' + parseLatLong(i[1], i[2]),
+		'Leg': parseLatLong(temp_lat_lon[0], temp_lat_lon[1]) + ' to ' + parseLatLong(i[1], i[2]),
 		'Date': start.strftime('%-d-%b'),
 		'Time': start.strftime('%I:%M %p') + ' - ' + i[0].strftime('%I:%M %p'),
-		'Average Temp': str(temp_temperature) + '\N{DEGREE SIGN}',
-		'Average Forecast': pw_sev + ' ' + pw_name
+		'Temp': str(temp_temperature) + '\N{DEGREE SIGN}',
+		'Forecast': pw_sev + ' ' + pw_name
 	})
 	
 	print(results)
@@ -243,15 +243,15 @@ def getForecast(address, start_date):
 				if not flag:
 					results.append({
 						'Location': city + ', ' + state,
-						'Date/Time':d,
-						'High/Low Temps': str(temp_high) + '\N{DEGREE SIGN}/' + str(temp_low) +'\N{DEGREE SIGN}',
+						'Date':d,
+						'Temps': str(temp_high) + '\N{DEGREE SIGN}/' + str(temp_low) +'\N{DEGREE SIGN}',
 						'Forecast': specific + ' ' + weather
 					})
 					flag = True
 				else:
 					results.append({
-						'Date/Time':d,
-						'High/Low Temps': str(temp_high) + '\N{DEGREE SIGN}/' + str(temp_low) +'\N{DEGREE SIGN}',
+						'Date':d,
+						'Temps': str(temp_high) + '\N{DEGREE SIGN}/' + str(temp_low) +'\N{DEGREE SIGN}',
 						'Forecast': specific + ' ' + weather
 					})
 				count += 1
