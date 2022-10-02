@@ -53,7 +53,8 @@
 		},
 		methods: {
 			getForecast() {
-				const path = 'http://localhost:5000/forecast?address=' + this.address + '&date=' + this.date + '&datePassed=' + this.datePassed;
+				const uri = process.env.VUE_APP_API_URI
+				const path = uri + '/forecast?address=' + this.address + '&date=' + this.date + '&datePassed=' + this.datePassed;
 				axios.get(path).then((res) => {
 					this.forecast = res.data;
 					console.log(this.forecast);

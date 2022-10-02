@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
+import os
 import requests
 import datetime
 import usaddress
 import googlemaps
 import dateutil.parser
 
-API_KEY = '037fc09875efaae5b2fac98681bfb967'
+API_KEY = os.getenv('WEATHER_API_KEY')
 
 #       getRouteForecast Outputs the series of different forecasts to be experienced along the drive.
 #       the route parameter is taken from the getDirections function dictionary result ['result']

@@ -2,6 +2,7 @@
 # George Shalhoub
 # Directions function creates direction from point A input to point B input
 
+import os
 import googlemaps
 import datetime
 import geopy.distance
@@ -12,7 +13,7 @@ import geopy.distance
 #       user is passing through them) in order to eventually query OpenWeatherAPI and forcast
 
 def get_autocomplete(address):
-        gmaps = googlemaps.Client(key='AIzaSyAOmofR5lI4E-wrJQEVaFN4SenkaEICPok')
+        gmaps = googlemaps.Client(key=os.getenv('GMAPS_API_KEY'))
         places = googlemaps.places.places_autocomplete(gmaps, input_text=address)
         results = []
         for i in places:
@@ -21,7 +22,7 @@ def get_autocomplete(address):
         return results
 
 def get_directions(locs, time):
-        gmaps = googlemaps.Client(key='AIzaSyAOmofR5lI4E-wrJQEVaFN4SenkaEICPok')
+        gmaps = googlemaps.Client(key=os.getenv('GMAPS_API_KEY'))
 
         #       End returned dictionary
         results_dict = {}

@@ -48,7 +48,8 @@
 		},
 		methods: {
 			getAutoSuggest() {
-				const path = 'http://localhost:5000/addressSuggestions?address=' + this.addressInput;
+				const uri = process.env.VUE_APP_API_URI
+				const path = uri + '/addressSuggestions?address=' + this.addressInput;
 				axios.get(path).then((res) => {
 					this.addresses = res.data;
 				}).catch((error) => {
