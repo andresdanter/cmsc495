@@ -1,0 +1,14 @@
+flask==2.1.0
+flask-cors
+flask-rest-api
+flask_swagger_ui
+flask-views
+SQLAlchemy
+psycopg2-binary
+requests
+googlemaps
+geopy
+usaddress
+python-dateutil
+pytz
+werkzeug==2.0.3

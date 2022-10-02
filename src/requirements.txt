@@ -1,4 +1,0 @@
-googlemaps
-requests
-Flask
-Flask-Cors
