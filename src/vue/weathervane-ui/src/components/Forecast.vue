@@ -53,7 +53,7 @@
 		},
 		methods: {
 			getForecast() {
-				const uri = process.env.VUE_APP_API_URI
+				const uri = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
 				const path = uri + '/forecast?address=' + this.address + '&date=' + this.date + '&datePassed=' + this.datePassed;
 				axios.get(path).then((res) => {
 					this.forecast = res.data;

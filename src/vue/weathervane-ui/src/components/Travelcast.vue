@@ -57,7 +57,7 @@
 		},
 		methods: {
 			getTravelcast() {
-				const uri = process.env.VUE_APP_API_URI
+				const uri = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
 				const path = uri + '/travelcast?addresses=' + this.addresses + '&date=' + this.date + '&datePassed=' + this.datePassed;
 				axios.get(path).then((res) => {
 					this.travelcast = res.data;
