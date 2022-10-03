@@ -41,6 +41,10 @@
 	import axios from 'axios';
 	import moment from 'moment';
 
+	const client = axios.create({
+    	baseURL: (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
+    });
+
 	export default {
 		name: "MyForecast", 
 		data() {
@@ -53,9 +57,8 @@
 		},
 		methods: {
 			getForecast() {
-				const uri = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
-				const path = uri + '/forecast?address=' + this.address + '&date=' + this.date + '&datePassed=' + this.datePassed;
-				axios.get(path).then((res) => {
+				const path = '/forecast?address=' + this.address + '&date=' + this.date + '&datePassed=' + this.datePassed;
+				client.get(path).then((res) => {
 					this.forecast = res.data;
 					console.log(this.forecast);
 				}).catch((error) => {

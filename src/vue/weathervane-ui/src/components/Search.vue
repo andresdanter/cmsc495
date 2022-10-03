@@ -34,6 +34,10 @@
 <script>
 	import axios from 'axios';
 
+	const client = axios.create({
+    	baseURL: (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
+    });
+
 	export default {
 		name: "MySearch", 
 		data() {
@@ -48,9 +52,8 @@
 		},
 		methods: {
 			getAutoSuggest() {
-				const uri = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
-				const path = uri + '/addressSuggestions?address=' + this.addressInput;
-				axios.get(path).then((res) => {
+				const path = '/addressSuggestions?address=' + this.addressInput;
+				client.get(path).then((res) => {
 					this.addresses = res.data;
 				}).catch((error) => {
 					console.error(error);
@@ -70,13 +73,11 @@
 				this.addressInput = null;
 			},
 			executeForecast(){
-				const uri = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
-				this.$router.push(uri + "/forecast/" + this.tripLegs[0] + '/' + new Date() + '/false')
+				this.$router.push(uri + "forecast/" + this.tripLegs[0] + '/' + new Date() + '/false')
 			},
 			executeTravelcast() {
-				const uri = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
 				console.log(this.addressesString);
-				this.$router.push(uri + "/travelcast/" + this.addressesString + '/' + new Date() + '/false')
+				this.$router.push(uri + "travelcast/" + this.addressesString + '/' + new Date() + '/false')
 			}
 		},
 	};
