@@ -46,7 +46,9 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "main" ]
+    paths:
+      - Dockerfile-api
+      - 'src/python/**'
 
 env:
   PROJECT_ID: sinuous-crow-362704 # TODO: update Google Cloud project id
