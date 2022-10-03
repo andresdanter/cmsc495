@@ -48,7 +48,7 @@
 		},
 		methods: {
 			getAutoSuggest() {
-				const uri = process.env.VUE_APP_API_URI
+				const uri = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
 				const path = uri + '/addressSuggestions?address=' + this.addressInput;
 				axios.get(path).then((res) => {
 					this.addresses = res.data;
