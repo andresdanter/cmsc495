@@ -42,7 +42,7 @@
 	import moment from 'moment';
 
 	const client = axios.create({
-    	baseURL: (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
+        baseURL: (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
     });
 
 	export default {
