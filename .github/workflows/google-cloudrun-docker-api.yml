@@ -47,7 +47,7 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     paths:
-      - Dockerfile-api
+      - 'Dockerfile-api'
       - 'src/python/**'
 
 env:
