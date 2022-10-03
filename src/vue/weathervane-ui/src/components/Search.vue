@@ -70,11 +70,13 @@
 				this.addressInput = null;
 			},
 			executeForecast(){
-				this.$router.push("forecast/" + this.tripLegs[0] + '/' + new Date() + '/false')
+				const uri = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
+				this.$router.push(uri + "/forecast/" + this.tripLegs[0] + '/' + new Date() + '/false')
 			},
 			executeTravelcast() {
+				const uri = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
 				console.log(this.addressesString);
-				this.$router.push("travelcast/" + this.addressesString + '/' + new Date() + '/false')
+				this.$router.push(uri + "/travelcast/" + this.addressesString + '/' + new Date() + '/false')
 			}
 		},
 	};
