@@ -47,6 +47,7 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     paths:
+      - '.github/workflows/google-cloudrun-docker-ui.yml'
       - 'Dockerfile-ui'
       - 'src/vue/**'
 
@@ -114,6 +115,8 @@ jobs:
           # NOTE: If using a pre-built image, update the image name here
           #image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
           image: ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+        env:
+          VUE_APP_API_URI: 'https://api.weathervaneapp.com/'
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
