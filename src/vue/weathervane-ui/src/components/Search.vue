@@ -73,11 +73,11 @@
 				this.addressInput = null;
 			},
 			executeForecast(){
-				this.$router.push(uri + "forecast/" + this.tripLegs[0] + '/' + new Date() + '/false')
+				this.$router.push("forecast/" + this.tripLegs[0] + '/' + new Date() + '/false')
 			},
 			executeTravelcast() {
 				console.log(this.addressesString);
-				this.$router.push(uri + "travelcast/" + this.addressesString + '/' + new Date() + '/false')
+				this.$router.push("travelcast/" + this.addressesString + '/' + new Date() + '/false')
 			}
 		},
 	};
