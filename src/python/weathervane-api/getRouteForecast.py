@@ -209,27 +209,11 @@ def getTravelcast(route):
 def getForecast(address, start_date):
     results = []
     
-    parsed_address = usaddress.parse(address)
-    cityList = list(filter(lambda item: item[1] == 'PlaceName', parsed_address))
-    stateList = list(filter(lambda item: item[1] == 'StateName', parsed_address))
-    city = None
-    state = None
-    if (len(cityList) == 1):
-        city = cityList[0][0].replace(',','')
-    
-    if (len(stateList) == 1):
-        state = stateList[0][0].replace(',','')
+    parsed_address = { part[1]: part[0] for part in usaddress.parse(address) }
+    city = parsed_address.get('PlaceName', '').rstrip(',')
+    state = parsed_address.get('StateName', '').rstrip(',')
 
     print("This is what we got for {city} and {state}")
-    '''
-    for i in parsed_address:
-        if i[1] == 'PlaceName':
-            city = i[0].replace(',','')
-            print(f"This is what we got for city: {i[0]} & {city}")
-        if i[1] == 'StateName':
-            state = i[0].replace(',','')
-            break
-    '''
         
     url = 'http://api.openweathermap.org/geo/1.0/direct?q={city},{state},{country}&limit={limit}&appid={API}'
     url = url.format(city=city, state=state, country='US', limit=1, API=API_KEY)
