@@ -1,9 +1,20 @@
 <template>
     <div class="MyForecast"> 
+        <v-banner>
+        <v-row align="left" justify="left" v-bind:style="{ height: deviceHeight * 0.6 + 'px',}"> 
+            <v-col>
+                <v-img
+                :src="require('../assets/weathervane.png')"
+                class=""
+                position=""
+                contain
+                height="60"
+                />
+            </v-col>
+        </v-row>
+        <center><h1>Weather Vane</h1></center>
+        </v-banner>
         <center>
-            <div><br></div>
-            <h1>Weather Vane</h1>
-            <div><br></div>
             <v-table>
                 <thead>
                     <tr>

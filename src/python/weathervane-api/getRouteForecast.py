@@ -210,13 +210,26 @@ def getForecast(address, start_date):
     results = []
     
     parsed_address = usaddress.parse(address)
+    cityTuple = filter(lambda item: item[1] == 'PlaceName', parsed_address)
+    stateTuple = filter(lambda item: item[1] == 'StateName', parsed_address)
+    city = None
+    state = None
+    if (len(cityTuple) == 1):
+        city = cityTuple[0].replace(',','')
+    
+    if (len(stateTuple) == 1):
+        state = stateTuple[0].replace(',','')
+
+    print("This is what we got for {city} and {state}")
+    '''
     for i in parsed_address:
         if i[1] == 'PlaceName':
-            print(f"This is what we got for {city}")
             city = i[0].replace(',','')
+            print(f"This is what we got for city: {i[0]} & {city}")
         if i[1] == 'StateName':
             state = i[0].replace(',','')
             break
+    '''
         
     url = 'http://api.openweathermap.org/geo/1.0/direct?q={city},{state},{country}&limit={limit}&appid={API}'
     url = url.format(city=city, state=state, country='US', limit=1, API=API_KEY)
