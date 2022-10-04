@@ -5,9 +5,10 @@ FROM python:3.8-slim-buster
 WORKDIR /weathervane
 
 COPY src/python/requirements.txt requirements.txt
-COPY src/python/weathervane-api /weathervane/
 
 RUN pip3 install -r requirements.txt
+
+COPY src/python/weathervane-api /weathervane/
 
 ENV PORT 8080
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import logging
 import requests
 import datetime
 import usaddress
@@ -8,6 +9,7 @@ import googlemaps
 import dateutil.parser
 
 API_KEY = os.getenv('WEATHER_API_KEY')
+logging.basicConfig(level=logging.INFO)
 
 #       getRouteForecast Outputs the series of different forecasts to be experienced along the drive.
 #       the route parameter is taken from the getDirections function dictionary result ['result']
@@ -208,13 +210,13 @@ def getTravelcast(route):
 #       Will return daily forecast for the next 7 days
 def getForecast(address, start_date):
     results = []
-    
-    parsed_address = { part[1]: part[0] for part in usaddress.parse(address) }
-    city = parsed_address.get('PlaceName', '').rstrip(',')
-    state = parsed_address.get('StateName', '').rstrip(',')
+    retag_mapping = { "PlaceName": "city", "StateName": "state" }
+    parsed_address = usaddress.tag(address, retag_mapping)
+    logging.debug(f"Parsed address: {parsed_address}")
 
-    print("This is what we got for {city} and {state}")
-        
+    city = parsed_address[0].get('city')
+    state = parsed_address[0].get('state').split()[0].rstrip(',')
+
     url = 'http://api.openweathermap.org/geo/1.0/direct?q={city},{state},{country}&limit={limit}&appid={API}'
     url = url.format(city=city, state=state, country='US', limit=1, API=API_KEY)
     response = requests.get(url)
