@@ -16,7 +16,7 @@
             <v-card class="mx-auto" max-width="500" v-if="addresses.length" style="text-align: left;">
                 <v-list v-for="address in addresses" :key="address" @click="selectAddress(address)">{{address}}</v-list>
             </v-card>
-            <v-btn color="secondary" size="small" @click="addAddress()">Submit Address</v-btn>
+            <v-btn color="secondary" size="small" @click="addAddress()">Add Address</v-btn>
             <div><br></div>
             <h4 v-if="tripLegs.length"><br>Trip Legs</h4>
             <p v-for="trip in tripLegs" :key="trip">{{trip}}</p>

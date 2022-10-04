@@ -24,7 +24,7 @@
 				<tbody>
 					<tr
 						v-for="item in forecast"
-						:key="item.date"
+						:key="item.Date
 					>
 						<td>{{ item.Location }}</td>
 						<td>{{ item.Date }}</td>

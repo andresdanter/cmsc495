@@ -27,7 +27,7 @@
 				<tbody>
 					<tr
 						v-for="item in travelcast"
-						:key="item.date"
+						:key="item.Date"
 					>
 						<td>{{ item.Leg }}</td>
 						<td>{{ item.Date }}</td>
@@ -61,7 +61,7 @@
 				const path = uri + '/travelcast?addresses=' + this.addresses + '&date=' + this.date + '&datePassed=' + this.datePassed;
 				axios.get(path).then((res) => {
 					this.travelcast = res.data;
-					console.log(this.forecast);
+					console.log(this.travelcast);
 				}).catch((error) => {
 					console.error(error);
 				});

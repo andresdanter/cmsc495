@@ -182,11 +182,11 @@ def getTravelcast(route):
             temp_temperature = weather_temperature
         if temp_weather_cond != pw_sev:
             results.append({
-                    'Trip Leg': parseLatLong(temp_lat_lon[0], temp_lat_lon[1]) + ' to ' + parseLatLong(i[1], i[2]),
+                    'Leg': parseLatLong(temp_lat_lon[0], temp_lat_lon[1]) + ' to ' + parseLatLong(i[1], i[2]),
                     'Date': start.strftime('%-d-%b'),
                     'Time': start.strftime('%I:%M %p') + ' - ' + i[0].strftime('%I:%M %p'),
-                    'Average Temp': str(temp_temperature) + '\N{DEGREE SIGN}',
-                    'Average Forecast': temp_weather_cond + ' ' + temp_weather_name
+                    'Temp': str(temp_temperature) + '\N{DEGREE SIGN}',
+                    'Forecast': temp_weather_cond + ' ' + temp_weather_name
             })
             start = i[0]
             temp_weather_cond = pw_sev
@@ -212,6 +212,7 @@ def getForecast(address, start_date):
     parsed_address = usaddress.parse(address)
     for i in parsed_address:
         if i[1] == 'PlaceName':
+            print(f"This is what we got for {city}")
             city = i[0].replace(',','')
         if i[1] == 'StateName':
             state = i[0].replace(',','')
@@ -267,10 +268,10 @@ def getForecast(address, start_date):
         temp = round(kelvinToFahrenheit(weather['main']['temp']), 2)
         weather, specific = parseWeather(weather['weather'][0]['main'], weather['weather'][0]['description'])
         results.append({
-            'Location': city + ', ' + state,
+            'Location': f"{city}, {state}",
             'Date': date,
             'Time': time,
-            'Temperature': str(temp) + '\N{DEGREE SIGN}',
+            'Temps': str(temp) + '\N{DEGREE SIGN}',
             'Forecast': specific + ' ' + weather
         })
     
