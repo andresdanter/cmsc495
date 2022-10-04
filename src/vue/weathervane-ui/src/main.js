@@ -4,7 +4,7 @@ import { createVuetify } from 'vuetify'
 import App from './App.vue'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import { createWebHistory, createRouter, createWebHashHistory } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 import Search from './components/Search.vue'
 import Forecast from './components/Forecast.vue'
 import Travelcast from './components/Travelcast.vue'

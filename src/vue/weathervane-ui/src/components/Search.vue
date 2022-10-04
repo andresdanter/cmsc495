@@ -1,11 +1,17 @@
 <template>
     <v-banner>
-      <v-img
-        lazy-src=weathervane_logo_cropped_nobgnd2.png
-        max-height="70"
-        max-width="150"
-        src=weathervane_logo_cropped_nobgnd2.png
-      ></v-img><center><h1>Weather Vane</h1></center>
+      <v-row align="left" justify="left" v-bind:style="{ height: deviceHeight * 0.6 + 'px',}"> 
+        <v-col>
+            <v-img
+                :src="require('../assets/weathervane.png')"
+				class=""
+				position=""
+                contain
+                height="60"
+			/>
+        </v-col>
+      </v-row>
+      <center><h1>Weather Vane</h1></center>
     </v-banner>
     <div class="MySearch"> 
         <center>
