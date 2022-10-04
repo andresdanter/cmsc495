@@ -214,10 +214,10 @@ def getForecast(address, start_date):
     stateTuple = filter(lambda item: item[1] == 'StateName', parsed_address)
     city = None
     state = None
-    if (len(cityTuple) == 1):
+    if (len(cityTuple) == 2):
         city = cityTuple[0].replace(',','')
     
-    if (len(stateTuple) == 1):
+    if (len(stateTuple) == 2):
         state = stateTuple[0].replace(',','')
 
     print("This is what we got for {city} and {state}")
