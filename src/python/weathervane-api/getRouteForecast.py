@@ -210,15 +210,15 @@ def getForecast(address, start_date):
     results = []
     
     parsed_address = usaddress.parse(address)
-    cityTuple = filter(lambda item: item[1] == 'PlaceName', parsed_address)
-    stateTuple = filter(lambda item: item[1] == 'StateName', parsed_address)
+    cityList = list(filter(lambda item: item[1] == 'PlaceName', parsed_address))
+    stateList = list(filter(lambda item: item[1] == 'StateName', parsed_address))
     city = None
     state = None
-    if (len(cityTuple) == 2):
-        city = cityTuple[0].replace(',','')
+    if (len(cityList) == 1):
+        city = cityList[0][0].replace(',','')
     
-    if (len(stateTuple) == 2):
-        state = stateTuple[0].replace(',','')
+    if (len(stateList) == 1):
+        state = stateList[0][0].replace(',','')
 
     print("This is what we got for {city} and {state}")
     '''
