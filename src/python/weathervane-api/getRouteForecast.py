@@ -102,8 +102,10 @@ def parseLatLong(lat, long):
     url = url.format(lat=lat, lon=long, limit = 5, API=API_KEY)
     response = requests.get(url)
     json_data = response.json()
-    #print(json_data)
-    return json_data[0]['name'] + ', ' + us_state_to_abbrev[json_data[0]['state']]
+    logging.debug(f"Possible locations to parse: {json_data}")
+    city = json_data[0]['name']
+    state = json_data[0]['state']
+    return f"{city}, {us_state_to_abbrev.get(state)}"
 
 #       Turns OpenWeatherAPI weather condition to a usable weather format
 def parseWeather(weather, spec):

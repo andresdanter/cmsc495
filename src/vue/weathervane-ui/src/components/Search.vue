@@ -4,11 +4,11 @@
         <v-col>
             <v-img
                 :src="require('../assets/weathervane.png')"
-				class=""
-				position=""
+                class=""
+                position=""
                 contain
                 height="60"
-			/>
+            />
         </v-col>
       </v-row>
       <center><h1>Weather Vane</h1></center>
@@ -24,12 +24,22 @@
             </v-card>
             <v-btn color="secondary" size="small" @click="addAddress()">Add Address</v-btn>
             <div><br></div>
-            <h4 v-if="tripLegs.length"><br>Trip Legs</h4>
-            <p v-for="trip in tripLegs" :key="trip">{{trip}}</p>
-            <div><br></div>
+            <div>
+                <h4 v-if="locations.length"><br>Locations</h4>
+                <ul>
+                    <li v-for="(loc, index) in locations" :key="index">
+                        <span>{{ loc }}</span>
+                        <v-btn class="mx-2" color="black"
+                               icon="mdi-delete"
+                               size="x-small" @click="removeLocation(index)"
+                        ></v-btn>
+                    </li>
+                </ul>
+            </div>
+            <br>
             <v-select
               :items="options"
-              label="Select"
+              label="Select Option"
               outlined
               v-model="selected"
             ></v-select>
@@ -40,21 +50,6 @@
             >
               Submit
             </v-btn>
-            <!--
-            <v-btn 
-                v-if="tripLegs.length"
-                color="secondary"
-                size="small"
-                @click='executeForecast'
-            >Execute Forecast</v-btn>
-            <div><br></div>
-            <v-btn 
-                v-if="tripLegs.length"
-                color="secondary"
-                size="small"
-                @click='executeTravelcast'
-            >Execute Travelcast</v-btn>
-            -->
         </center>
     </div>
 </template>
@@ -73,9 +68,10 @@
                 addresses: [],
                 addressesString: '',
                 selectedAddress: '',
-                tripLegs: [],
+                locations: [],
                 options: ['Forecast', 'Travelcast'],
                 selected: '',
+                alert: false,
             };
         },
         methods: {
@@ -92,13 +88,17 @@
                 this.addresses = []
             },
             addAddress() {
-                this.tripLegs.push(this.addressInput);
-                if(this.addressesString == '') {
-                    this.addressesString += this.addressInput;
+                if (this.locations.length < 5) {
+                    this.locations.push(this.addressInput);
+                    if(this.addressesString == '') {
+                        this.addressesString += this.addressInput;
+                    } else {
+                        this.addressesString += '|' + this.addressInput;
+                    }
+                    this.addressInput = null;
                 } else {
-                    this.addressesString += '|' + this.addressInput;
+                    this.alert =  true;
                 }
-                this.addressInput = null;
             },
             executeForecast(){
                 this.$router.push("forecast/" + this.addressesString + '/' + new Date() + '/false')
@@ -118,6 +118,9 @@
                     default:
                         console.log("No option selected");
                 }
+            },
+            removeLocation(index) {
+                this.locations.splice(index, 1);
             }
         },
     };
