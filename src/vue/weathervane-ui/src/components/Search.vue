@@ -27,7 +27,15 @@
     <center>
       <div><br></div>
         <div><br></div>
-          <v-text-field clearable type="text" outlined label="Enter Address" id="addressInput" v-model="addressInput" v-on:input="getAutoSuggest" class="shrink" ></v-text-field>
+          <!--<v-text-field clearable hide-details="auto" type="text" outlined label="Enter Address" id="addressInput" v-model="addressInput" v-on:input="getAutoSuggest" class="shrink" ></v-text-field>-->
+          <v-text-field
+            id="addressInput"
+            v-model="addressInput"
+            v-on:input="getAutoSuggest"
+            clearable
+            outlined
+            label="Enter Address"
+          ></v-text-field>
           <v-card class="mx-auto" max-width="500" v-if="addresses.length" style="text-align: left;">
             <v-list v-for="address in addresses" :key="address" @click="selectAddress(address)">{{address}}</v-list>
           </v-card>
@@ -49,6 +57,16 @@
               </v-card-text>
               <v-card-actions>
                 <v-btn color="primary" block @click="dupAlert = false">Close</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="emptyAlert">
+            <v-card>
+              <v-card-text>
+              Location entered may not be empty.
+              </v-card-text>
+              <v-card-actions>
+                <v-btn color="primary" block @click="emptyAlert = false">Close</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -114,6 +132,7 @@
                 selected: '',
                 maxLocAlert: false,
                 dupAlert: false,
+                emptyAlert: false
             };
         },
         methods: {
@@ -130,20 +149,24 @@
                 this.addresses = []
             },
             addAddress() {
-                if (!this.locations.includes(this.addressInput)) {
-                    if (this.locations.length < 5) {
-                        this.locations.push(this.addressInput);
-                        if(this.addressesString == '') {
-                            this.addressesString += this.addressInput;
-                        } else {
-                            this.addressesString += '|' + this.addressInput;
-                        }
-                        this.addressInput = null;
-                    } else {
-                        this.maxLocAlert =  true;
-                    }
-                } else {
+                if (this.addressInput == "" || this.addressInput == null) {
+                    this.emptyAlert = true;
+                    return;
+                }
+                if (this.locations.includes(this.addressInput)) {
                     this.dupAlert = true;
+                    return;
+                }
+                if (this.locations.length < 5) {
+                    this.locations.push(this.addressInput);
+                    if(this.addressesString == '') {
+                        this.addressesString += this.addressInput;
+                    } else {
+                        this.addressesString += '|' + this.addressInput;
+                    }
+                    this.addressInput = null;
+                } else {
+                    this.maxLocAlert =  true;
                 }
             },
             executeForecast(){
