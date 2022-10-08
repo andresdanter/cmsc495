@@ -1,15 +1,16 @@
-import 'vuetify/styles' // Global CSS has to be imported
+import 'vuetify/styles'; // Global CSS has to be imported
 import '@mdi/font/css/materialdesignicons.css'
 import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
 import App from './App.vue'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import { createWebHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from 'vue-router'
 import Search from './components/Search.vue'
 import Forecast from './components/Forecast.vue'
 import Travelcast from './components/Travelcast.vue'
-import { createAuth0, authGuard } from '@auth0/auth0-vue';
+import User from './components/User.vue'
+import { createAuth0, authGuard } from '@auth0/auth0-vue'
 
 const routes = [
   {
@@ -28,6 +29,12 @@ const routes = [
     path: '/travelcast/:addresses/:date/:datePassed',
     name: 'Travelcast',
     component: Travelcast,
+    beforeEnter: authGuard
+  },
+  {
+    path: '/user',
+    name: 'User',
+    component: User,
     beforeEnter: authGuard
   }
 ];
@@ -50,8 +57,8 @@ app.use(
   createAuth0({
     domain: "dev-9hy7zhkb.us.auth0.com",
     client_id: "FrRBmDxaWxpZAPVJmG4sQ2jg9zia5WYI",
-    redirect_uri: window.location.origin,
-    audience: "https://weathervaneapp.com/api"
+    redirect_uri: window.location.origin
+    //audience: "https://weathervaneapp.com/api"
   })
 );
 
