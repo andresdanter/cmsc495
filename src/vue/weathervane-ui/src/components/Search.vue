@@ -112,14 +112,13 @@
         name: "MySearch",
         setup() {
             const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
-            var baseURL = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI;
+            var baseURL = window.location.origin;
             
             return {
                 login: () => {
                     loginWithRedirect();
                 },
                 logout: () => {
-                    console.log(baseURL)
                     logout({ returnTo: baseURL + '/logout' });
                 },
                 user,
