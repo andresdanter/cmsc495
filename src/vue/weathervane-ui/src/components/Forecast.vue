@@ -50,7 +50,7 @@
               color="secondary"
               @click='goHome'
             >
-              Go Back to Weather Vane
+              Home
             </v-btn>
             </div>
         </center>
