@@ -1,18 +1,24 @@
 <template>
     <v-banner>
-        <v-row align="left" justify="left" v-bind:style="{ height: deviceHeight * 0.6 + 'px',}"> 
-            <v-col>
-                <v-img
-                :src="require('../assets/weathervane.png')"
-                class=""
-                position=""
-                contain
-                height="60"
-                />
-            </v-col>
-        </v-row>
-        <center><h1>Weather Vane</h1></center>
-    </v-banner>
+    <v-row align="left" justify="left" v-bind:style="{ height: deviceHeight * 0.6 + 'px',}"> 
+      <v-col></v-col>
+      <v-col>
+        <v-img
+          :src="require('../assets/weathervane.png')"
+          class=""
+          position=""
+          contain
+          height="60"
+        />
+      </v-col>
+      <v-col>
+        <v-btn prepend-icon="mdi-logout" color="primary" @click='logout'>
+              Logout
+        </v-btn>
+      </v-col>
+    </v-row>
+    <center><h1>Weather Vane</h1></center>
+  </v-banner>
     <div>
       <pre v-if="isAuthenticated">
         <v-container>
@@ -42,11 +48,15 @@
     export default {
       name: "MyUser",
       setup() {
-        const { loginWithRedirect, user, isAuthenticated } = useAuth0();
+        const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+        var baseURL = window.location.origin;
   
         return {
           login: () => {
             loginWithRedirect();
+          },
+          logout: () => {
+            logout({ returnTo: baseURL + '/logout' });
           },
           user,
           isAuthenticated

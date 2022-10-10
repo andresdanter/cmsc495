@@ -12,7 +12,7 @@
         />
       </v-col>
       <v-col>
-        <v-btn icon @click='logout'>
+        <v-btn icon @click='routeToUser'>
           <v-avatar icon color="black">
             <v-icon dark>
               mdi-account-circle
@@ -111,15 +111,12 @@
     export default {
         name: "MySearch",
         setup() {
-            const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
-            var baseURL = window.location.origin;
+            const { loginWithRedirect, user, isAuthenticated } = useAuth0();
+            
             
             return {
                 login: () => {
                     loginWithRedirect();
-                },
-                logout: () => {
-                    logout({ returnTo: baseURL + '/logout' });
                 },
                 user,
                 isAuthenticated

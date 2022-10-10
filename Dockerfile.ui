@@ -1,6 +1,4 @@
-FROM node:lts-alpine
-
-RUN npm install -g http-server
+FROM node:lts-alpine as builder
 
 WORKDIR /app
 
@@ -12,6 +10,14 @@ COPY src/vue/weathervane-ui/ .
 
 RUN npm run build
 
+FROM nginx:alpine as prod-build
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+RUN rm -rf /usr/share/nginx/html/*
+
+COPY --from=builder /app/dist /usr/share/nginx/html
+
 EXPOSE 8080
 
-CMD [ "http-server", "dist" ]
+CMD [ "nginx", "-g", "daemon off;" ]
