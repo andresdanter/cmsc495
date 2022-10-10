@@ -13,7 +13,7 @@
       </v-col>
       <v-col>
         <v-btn prepend-icon="mdi-logout" color="primary" @click='logout'>
-              Logout
+        Logout
         </v-btn>
       </v-col>
     </v-row>
