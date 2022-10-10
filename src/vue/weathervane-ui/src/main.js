@@ -9,6 +9,8 @@ import { createWebHistory, createRouter } from 'vue-router'
 import Search from './components/Search.vue'
 import Forecast from './components/Forecast.vue'
 import Travelcast from './components/Travelcast.vue'
+import Login from './components/Login.vue'
+import Logout from './components/Logout.vue'
 import User from './components/User.vue'
 import { createAuth0, authGuard } from '@auth0/auth0-vue'
 
@@ -36,7 +38,18 @@ const routes = [
     name: 'User',
     component: User,
     beforeEnter: authGuard
-  }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: Logout
+    //beforeEnter: authGuard
+  },
 ];
 
 const router = createRouter({

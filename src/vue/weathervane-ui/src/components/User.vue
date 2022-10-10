@@ -14,22 +14,22 @@
         <center><h1>Weather Vane</h1></center>
     </v-banner>
     <div>
-      <br/>
-      <br/>
       <pre v-if="isAuthenticated">
         <v-container>
-          <v-row align="end" justify="start">
-            <v-col cols="4">
+          <v-row align="end">
+            <v-col align="end" cols="4">
               <h2>User Profile</h2>
-              <v-sheet class="pa-2 ma-2">
-              <b>Nickname:</b>
-              {{ user.nickname }}
-              <b>Email:</b>
-              {{ user.email }}
-              <b>Last Updated:</b>
-              {{ formatDatetime(user.updated_at) }}
-              </v-sheet>
             </v-col>
+            <v-row>
+              <v-col align="begin">
+                <b>Nickname:</b>
+                {{ user.nickname }}
+                <b>Email:</b>
+                {{ user.email }}
+                <b>Last Updated:</b>
+                {{ formatDatetime(user.updated_at) }}
+              </v-col>
+            </v-row>
           </v-row>
         </v-container>
       </pre>

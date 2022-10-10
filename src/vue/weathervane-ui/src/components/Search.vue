@@ -12,7 +12,7 @@
         />
       </v-col>
       <v-col>
-        <v-btn icon @click='routeToUser'>
+        <v-btn icon @click='logout'>
           <v-avatar icon color="black">
             <v-icon dark>
               mdi-account-circle
@@ -27,7 +27,6 @@
     <center>
       <div><br></div>
         <div><br></div>
-          <!--<v-text-field clearable hide-details="auto" type="text" outlined label="Enter Address" id="addressInput" v-model="addressInput" v-on:input="getAutoSuggest" class="shrink" ></v-text-field>-->
           <v-text-field
             id="addressInput"
             v-model="addressInput"
@@ -95,7 +94,7 @@
             color="secondary"
             @click='executeOption'
         >
-            Submit
+        Submit
         </v-btn>
     </center>
   </div>
@@ -112,11 +111,17 @@
     export default {
         name: "MySearch",
         setup() {
-            const { loginWithRedirect, user, isAuthenticated } = useAuth0();
+            const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+            //var baseURL = (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI;
+            var baseURL = (process.env.VUE_APP_API_URI == null) ? 'https://localhost:8080' : process.env.VUE_APP_API_URI;
             
             return {
                 login: () => {
                     loginWithRedirect();
+                },
+                logout: () => {
+                    console.log(baseURL)
+                    logout({ returnTo: baseURL + '/logout' });
                 },
                 user,
                 isAuthenticated
