@@ -44,6 +44,15 @@
                     </tr>
                 </tbody>
             </v-table>
+			<div>
+            <v-btn
+              depressed
+              color="secondary"
+              @click='goHome'
+            >
+              Go Back to Weather Vane
+            </v-btn>
+            </div>
         </center>
     </div>
 </template>
@@ -76,6 +85,9 @@
                     console.error(error);
                 });
             },
+			goHome() {
+                this.$router.push({path: '/'});
+            }
         },
         created: function() {
             this.address = this.$route.params.address;
