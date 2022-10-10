@@ -12,7 +12,7 @@ services:
   wv-ui:
     image: weathervane-ui:latest
     ports:
-      - "5001:8080"
+      - "8080:8080"
     networks:
       - app-network
 
