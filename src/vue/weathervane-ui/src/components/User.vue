@@ -40,6 +40,17 @@
         </v-container>
       </pre>
     </div>
+    <center>
+      <div>
+        <v-btn
+          depressed
+          color="secondary"
+          @click='goHome'
+        >
+        Home
+        </v-btn>
+      </div>
+    </center>
   </template>
   <script>
     import { useAuth0 } from '@auth0/auth0-vue';
@@ -64,7 +75,10 @@
       },
       methods: {
         formatDatetime(datetime) {
-            return this.date = moment(String(datetime)).format('MM/DD/YYYY hh:mm:ss');
+          return this.date = moment(String(datetime)).format('MM/DD/YYYY hh:mm:ss');
+        },
+        goHome() {
+          this.$router.push({path: '/'});
         }
       }
     };

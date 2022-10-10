@@ -33,7 +33,7 @@
             v-on:input="getAutoSuggest"
             clearable
             outlined
-            label="Enter Address"
+            label="Enter Location"
           ></v-text-field>
           <v-card class="mx-auto" max-width="500" v-if="addresses.length" style="text-align: left;">
             <v-list v-for="address in addresses" :key="address" @click="selectAddress(address)">{{address}}</v-list>
@@ -41,7 +41,7 @@
           <v-btn color="secondary" size="small" @click="addAddress()">Add Address</v-btn>
           <v-dialog v-model="maxLocAlert">
             <v-card>
-              <v-card-text>
+              <v-card-text class="text-center">
               Cannot enter more than 5 locations at this time.
               </v-card-text>
               <v-card-actions>
@@ -51,7 +51,7 @@
           </v-dialog>
           <v-dialog v-model="dupAlert">
             <v-card>
-              <v-card-text>
+              <v-card-text class="text-center">
               Location already entered.
               </v-card-text>
               <v-card-actions>
@@ -61,7 +61,7 @@
           </v-dialog>
           <v-dialog v-model="emptyAlert">
             <v-card>
-              <v-card-text>
+              <v-card-text class="text-center">
               Location entered may not be empty.
               </v-card-text>
               <v-card-actions>
