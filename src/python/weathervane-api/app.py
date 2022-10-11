@@ -61,12 +61,14 @@ def forecast():
 def travelcast():
     addresses = request.args.get('addresses', None)
     addresses = addresses.split('|')
-    date = dateutil.parser.parse(request.args.get('date', None))
+
     datePassed = request.args.get('datePassed', None)
     if datePassed == 'false':
         route = get_directions(addresses, datetime.datetime.now())['results']
         return jsonify(getTravelcast(route))
     else:
+        dateArg = request.args.get('date', None)
+        date = dateutil.parser.parse(dateArg)
         route = get_directions(addresses, date)['results']
         return jsonify(getTravelcast(route))
     
