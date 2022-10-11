@@ -70,7 +70,7 @@
             placeholder="Select Date"
             showNowButton nowButtonLabel="Now"
             hideInputIcon
-            @update:alue="handleDate"
+            @update:modelValue="handleDate"
             :minDate= "new Date()"
             :maxDate="new Date(new Date().setDate(new Date().getDate() + 7))"
             :enableTimePicker="false"
@@ -199,18 +199,20 @@
             },
             executeForecast(){
                 var date = this.getDate();
+                console.log(this.datePassed);
                 if (this.datePassed) {
-                  this.$router.push("forecast/" + this.addressesString + '/' + date + '/true')
+                  this.$router.push("forecast/" + this.addressesString + '/' + date + '/true');
                 } else {
-                  this.$router.push("forecast/" + this.addressesString + '/' + date + '/false')
+                  this.$router.push("forecast/" + this.addressesString + '/' + date + '/false');
                 }
             },
             executeTravelcast() {
                 var date = this.getDate();
+                console.log(this.datePassed);
                 if(this.datePassed) {
-                  this.$router.push("travelcast/" + this.addressesString + '/' + date + '/true')
+                  this.$router.push("travelcast/" + this.addressesString + '/' + date + '/true');
                 } else {
-                  this.$router.push("travelcast/" + this.addressesString + '/' + date + '/false')
+                  this.$router.push("travelcast/" + this.addressesString + '/' + date + '/false');
                 }
             },
             executeOption() {
