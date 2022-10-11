@@ -83,7 +83,7 @@
         },
         created: function() {
             this.addresses = this.$route.params.addresses;
-            this.date = moment(String(this.$route.params.date)).format('MM/DD/YYYY hh:mm:ss');
+            this.date = moment(String(this.$route.params.date)).format('MM/DD/YYYY HH:mm:ss');
             this.datePassed = this.$route.params.datePassed;
             this.getTravelcast();
         }
