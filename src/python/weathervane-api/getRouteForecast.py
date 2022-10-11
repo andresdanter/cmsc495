@@ -247,7 +247,7 @@ def getForecast(address, start_date):
     start_date:
     """
     results = []
-    retag_mapping = { "PlaceName": "city", "StateName": "state" }
+    retag_mapping = { "PlaceName": "city", "StateName": "state", "LandmarkName": "altCity" }
     try:
         parsed_address = usaddress.tag(address, retag_mapping)
     except usaddress.RepeatedLabelError as e:
@@ -258,6 +258,11 @@ def getForecast(address, start_date):
 
     city = parsed_address[0].get('city')
     state = parsed_address[0].get('state').split()[0].rstrip(',')
+ 
+    #multi-word cities are miss-identified as Landmarks, and the state as the city
+    if city in us_state_to_abbrev.values():
+        state = city
+        city = parsed_address[0].get('altCity')
 
     url = 'http://api.openweathermap.org/geo/1.0/direct?q={city},{state},{country}&limit={limit}&appid={API}'
     url = url.format(city=city, state=state, country='US', limit=1, API=API_KEY)
