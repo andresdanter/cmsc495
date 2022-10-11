@@ -1,19 +1,6 @@
 <template>
     <div class="MyForecast"> 
-        <v-banner>
-        <v-row align="left" justify="left" v-bind:style="{ height: deviceHeight * 0.6 + 'px',}"> 
-            <v-col>
-                <v-img
-                :src="require('../assets/weathervane.png')"
-                class=""
-                position=""
-                contain
-                height="60"
-                />
-            </v-col>
-        </v-row>
-        <center><h1>Weather Vane</h1></center>
-        </v-banner>
+    <WVBanner />
         <center>
             <v-table>
                 <thead>
@@ -60,6 +47,7 @@
 <script>
     import axios from 'axios';
     import moment from 'moment';
+    import WVBanner from './Banner.vue'
 
     const client = axios.create({
         baseURL: (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
@@ -67,6 +55,9 @@
 
     export default {
         name: "MyForecast", 
+        components: {
+            WVBanner
+        },
         data() {
             return {
                 forecast: [],

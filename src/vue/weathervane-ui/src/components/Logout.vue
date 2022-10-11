@@ -1,19 +1,6 @@
 <template>
     <div class="MyLogout"> 
-      <v-banner>
-        <v-row align="left" justify="left" v-bind:style="{ height: deviceHeight * 0.6 + 'px',}"> 
-            <v-col>
-                <v-img
-                :src="require('../assets/weathervane.png')"
-                class=""
-                position=""
-                contain
-                height="60"
-                />
-            </v-col>
-        </v-row>
-        <center><h1>Weather Vane</h1></center>
-    </v-banner>
+        <WVBanner />
         <center>
             <br/>
             <h2>You have been logged out</h2>
@@ -33,8 +20,13 @@
 </template>
 
 <script>
+    import WVBanner from './Banner.vue'
+
     export default {
         name: "MyLogout", 
+        components: {
+          WVBanner
+        },
         methods: {
             goHome() {
                 this.$router.push({path: '/'});

@@ -1,28 +1,5 @@
 <template>
-  <v-banner>
-    <v-row align="left" justify="left" v-bind:style="{ height: deviceHeight * 0.6 + 'px',}"> 
-      <v-col></v-col>
-      <v-col>
-        <v-img
-          :src="require('../assets/weathervane.png')"
-          class=""
-          position=""
-          contain
-          height="60"
-        />
-      </v-col>
-      <v-col>
-        <v-btn icon @click='routeToUser'>
-          <v-avatar icon color="black">
-            <v-icon dark>
-              mdi-account-circle
-            </v-icon>
-          </v-avatar>
-        </v-btn>
-      </v-col>
-    </v-row>
-    <center><h1>Weather Vane</h1></center>
-  </v-banner>
+  <WVBanner />
   <div class="MySearch"> 
     <center>
       <div><br></div>
@@ -90,7 +67,7 @@
             v-model="date"
             placeholder="Select Date"
             showNowButton nowButtonLabel="Now"
-            @update:modelValue="handleDate"
+            @update:alue="handleDate"
             :minDate= "new Date()"
             :maxDate="new Date(new Date().setDate(new Date().getDate() + 7))"
             :enableTimePicker="false"
@@ -129,10 +106,10 @@
 
 <script>
     import axios from 'axios';
-    import { ref } from 'vue';
     import  { useAuth0 }  from '@auth0/auth0-vue';
     import Datepicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
+    import WVBanner from './Banner.vue'
 
     const client = axios.create({
         baseURL: (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
@@ -140,7 +117,10 @@
 
     export default {
         name: "MySearch",
-        components: { Datepicker },
+        components: {
+          WVBanner,
+          Datepicker
+        },
         setup() {
             const { loginWithRedirect, user, isAuthenticated } = useAuth0();
 
@@ -203,14 +183,7 @@
                 }
             },
             executeForecast(){
-                console.log(this.date);
-                console.log(this.time);
-                var date = new Date(this.date.getFullYear(),
-                                    this.date.getMonth(),
-                                    this.date.getDate(),
-                                    this.time.hours,
-                                    this.time.minutes,
-                                    this.time.seconds);
+                var date = this.getDate();
                 if (this.datePassed) {
                   this.$router.push("forecast/" + this.addressesString + '/' + date + '/true')
                 } else {
@@ -218,13 +191,7 @@
                 }
             },
             executeTravelcast() {
-                console.log(this.addressesString);
-                var date = new Date(this.date.getFullYear(),
-                                    this.date.getMonth(),
-                                    this.date.getDate(),
-                                    this.time.getHours(),
-                                    this.time.getMinutes(),
-                                    this.time.getSeconds());
+                var date = this.getDate();
                 if(this.datePassed) {
                   this.$router.push("travelcast/" + this.addressesString + '/' + date + '/true')
                 } else {
@@ -246,12 +213,25 @@
             removeLocation(index) {
                 this.locations.splice(index, 1);
             },
-            routeToUser() {
-                this.$router.push({path: '/user'});
-            },
+            
             handleDate() {
                 this.datePassed = true;
+            },
+            getDate() {
+                var date = null;
+                if (this.time != null) {
+                  date = new Date(this.date.getFullYear(),
+                                  this.date.getMonth(),
+                                  this.date.getDate(),
+                                  this.time.hours,
+                                  this.time.minutes,
+                                  this.time.seconds);
+                } else {
+                  date = this.date;
+                }
+                return date;
             }
+
         },
     };
 </script>
