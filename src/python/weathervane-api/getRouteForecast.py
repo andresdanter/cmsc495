@@ -250,7 +250,7 @@ def getForecast(address, start_date):
     retag_mapping = { "PlaceName": "city", "StateName": "state" }
     try:
         parsed_address = usaddress.tag(address, retag_mapping)
-    except usaddress.RepeatedLabelError as 
+    except usaddress.RepeatedLabelError as e:
         logging.error(f"Unable to parse {address}: {e}")
         raise
 
