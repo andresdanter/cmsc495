@@ -25,7 +25,7 @@
                         :key="item.Date"
                     >
                         <td>{{ item.Location }}</td>
-                        <td>{{ item.Date }}</td>
+                        <td>{{ getDatetime(item.Date, item.Time) }}</td>
                         <td>{{ item.Temps }}</td>
                         <td>{{ item.Forecast }}</td>
                     </tr>
@@ -78,6 +78,13 @@
             },
 			goHome() {
                 this.$router.push({path: '/'});
+            },
+            getDatetime(date, time) {
+                if (time != null) {
+                    return date + " - " + time
+                } else {
+                    return date
+                }
             }
         },
         created: function() {
