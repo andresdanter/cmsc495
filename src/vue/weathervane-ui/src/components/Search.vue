@@ -86,7 +86,16 @@
       <v-row>
         <v-col></v-col>
         <v-col>
-          <Datepicker v-model="date" placeholder="Select Date" required :enableTimePicker="false" />
+          <Datepicker
+            v-model="date"
+            placeholder="Select Date"
+            showNowButton nowButtonLabel="Now"
+            @update:modelValue="handleDate"
+            :minDate= "new Date()"
+            :maxDate="new Date(new Date().setDate(new Date()))"
+            :enableTimePicker="false"
+          >
+          </Datepicker>
         </v-col>
         <v-col>
           <Datepicker v-model="time" timePicker modeHeight="120" placeholder="Select Time (Optional)"/>
@@ -114,6 +123,7 @@
 
 <script>
     import axios from 'axios';
+    import { ref } from 'vue';
     import  { useAuth0 }  from '@auth0/auth0-vue';
     import Datepicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css'
@@ -127,14 +137,21 @@
         components: { Datepicker },
         setup() {
             const { loginWithRedirect, user, isAuthenticated } = useAuth0();
-            
+            const date = ref(new Date());
+            const datePassed = ref(false);
+
+            const handleDate = (modelData) => {
+              datePassed.value = true;
+              date.value = modelData;
+            }
             
             return {
                 login: () => {
                     loginWithRedirect();
                 },
                 user,
-                isAuthenticated
+                isAuthenticated,
+                datePassed
             };
         },
         data() {
@@ -148,7 +165,6 @@
                 maxLocAlert: false,
                 dupAlert: false,
                 emptyAlert: false,
-                date: null,
                 time: null
             };
         },
@@ -187,11 +203,20 @@
                 }
             },
             executeForecast(){
-                this.$router.push("forecast/" + this.addressesString + '/' + new Date() + '/false')
+                console.log(this.date);
+                if (this.datePassed) {
+                  this.$router.push("forecast/" + this.addressesString + '/' + this.date + '/true')
+                } else {
+                  this.$router.push("forecast/" + this.addressesString + '/' + this.date + '/false')
+                }
             },
             executeTravelcast() {
                 console.log(this.addressesString);
-                this.$router.push("travelcast/" + this.addressesString + '/' + new Date() + '/false')
+                if(this.datePassed) {
+                  this.$router.push("travelcast/" + this.addressesString + '/' + this.date + '/true')
+                } else {
+                  this.$router.push("travelcast/" + this.addressesString + '/' + this.date + '/false')
+                }
             },
             executeOption() {
                 switch(this.selected) {

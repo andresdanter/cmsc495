@@ -73,6 +73,8 @@
                 address: '', 
                 date: '', 
                 datePassed: '',
+                time: '',
+                timePassed: ''
             };
         },
         methods: {
@@ -91,8 +93,12 @@
         },
         created: function() {
             this.address = this.$route.params.address;
-            this.date = moment(String(this.$route.params.date)).format('MM/DD/YYYY hh:mm:ss');
+            this.date = moment(String(this.$route.params.date)).format('MM/DD/YYYY');
             this.datePassed = this.$route.params.datePassed;
+            this.time = moment(String(this.$route.params.time)).format('hh:mm:ss');
+            this.timePassed = this.$route.params.timePassed;
+            console.log(this.date);
+            console.log(this.time);
             this.getForecast();
         }
     };
