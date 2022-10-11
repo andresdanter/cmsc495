@@ -69,6 +69,7 @@
             v-model="date"
             placeholder="Select Date"
             showNowButton nowButtonLabel="Now"
+            hideInputIcon
             @update:alue="handleDate"
             @closed="checkDateNotNull"
             :minDate= "new Date()"
