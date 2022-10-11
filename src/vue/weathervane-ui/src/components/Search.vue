@@ -26,76 +26,88 @@
   <div class="MySearch"> 
     <center>
       <div><br></div>
-        <div><br></div>
-          <v-text-field
-            id="addressInput"
-            v-model="addressInput"
-            v-on:input="getAutoSuggest"
-            clearable
-            outlined
-            label="Enter Location"
-          ></v-text-field>
-          <v-card class="mx-auto" max-width="500" v-if="addresses.length" style="text-align: left;">
-            <v-list v-for="address in addresses" :key="address" @click="selectAddress(address)">{{address}}</v-list>
-          </v-card>
-          <v-btn color="secondary" size="small" @click="addAddress()">Add Address</v-btn>
-          <v-dialog v-model="maxLocAlert">
-            <v-card>
-              <v-card-text class="text-center">
-              Cannot enter more than 5 locations at this time.
-              </v-card-text>
-              <v-card-actions>
-                <v-btn color="primary" block @click="maxLocAlert = false">Close</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <v-dialog v-model="dupAlert">
-            <v-card>
-              <v-card-text class="text-center">
-              Location already entered.
-              </v-card-text>
-              <v-card-actions>
-                <v-btn color="primary" block @click="dupAlert = false">Close</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-          <v-dialog v-model="emptyAlert">
-            <v-card>
-              <v-card-text class="text-center">
-              Location entered may not be empty.
-              </v-card-text>
-              <v-card-actions>
-                <v-btn color="primary" block @click="emptyAlert = false">Close</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        <div><br></div>
-        <div>
-          <h4 v-if="locations.length"><br>Locations</h4>
-          <ul>
-            <li v-for="(loc, index) in locations" :key="index">
-              <span>{{ loc }}</span>
-              <v-btn class="mx-2" color="black"
-                icon="mdi-delete"
-                size="x-small" @click="removeLocation(index)"
-              ></v-btn>
-            </li>
-          </ul>
-        </div>
-        <br>
-        <v-select
-          :items="options"
-          label="Select Option"
+      <div><br></div>
+      <v-text-field
+          id="addressInput"
+          v-model="addressInput"
+          v-on:input="getAutoSuggest"
+          clearable
           outlined
-          v-model="selected"
-        ></v-select>
-        <v-btn
-            depressed
-            color="secondary"
-            @click='executeOption'
-        >
-        Submit
-        </v-btn>
+          label="Enter Location"
+      ></v-text-field>
+      <v-card class="mx-auto" max-width="500" v-if="addresses.length" style="text-align: left;">
+        <v-list v-for="address in addresses" :key="address" @click="selectAddress(address)">{{address}}</v-list>
+      </v-card>
+      <v-btn color="secondary" size="small" @click="addAddress()">Add Address</v-btn>
+      <v-dialog v-model="maxLocAlert">
+        <v-card>
+          <v-card-text class="text-center">
+          Cannot enter more than 5 locations at this time.
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" block @click="maxLocAlert = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="dupAlert">
+        <v-card>
+          <v-card-text class="text-center">
+          Location already entered.
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" block @click="dupAlert = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="emptyAlert">
+        <v-card>
+          <v-card-text class="text-center">
+          Location entered may not be empty.
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" block @click="emptyAlert = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <div><br></div>
+      <div>
+        <h4 v-if="locations.length"><br>Locations</h4>
+        <ul>
+          <li v-for="(loc, index) in locations" :key="index">
+            <span>{{ loc }}</span>
+            <v-btn class="mx-2" color="black"
+              icon="mdi-delete"
+              size="x-small" @click="removeLocation(index)"
+            ></v-btn>
+          </li>
+        </ul>
+      </div>
+      <br>
+      <v-row>
+        <v-col></v-col>
+        <v-col>
+          <Datepicker v-model="date" placeholder="Select Date" required :enableTimePicker="false" />
+        </v-col>
+        <v-col>
+          <Datepicker v-model="time" timePicker modeHeight="120" placeholder="Select Time (Optional)"/>
+        </v-col>
+        <v-col></v-col>
+      </v-row>
+      <br>
+      <br>
+      <v-select
+        :items="options"
+        label="Select Option"
+        outlined
+        v-model="selected"
+      ></v-select>
+      <v-btn
+        depressed
+        color="secondary"
+        @click='executeOption'
+      >
+      Submit
+      </v-btn>
     </center>
   </div>
 </template>
@@ -103,6 +115,8 @@
 <script>
     import axios from 'axios';
     import  { useAuth0 }  from '@auth0/auth0-vue';
+    import Datepicker from '@vuepic/vue-datepicker';
+    import '@vuepic/vue-datepicker/dist/main.css'
 
     const client = axios.create({
         baseURL: (process.env.VUE_APP_API_URI == null) ? 'https://api.weathervaneapp.com' : process.env.VUE_APP_API_URI
@@ -110,6 +124,7 @@
 
     export default {
         name: "MySearch",
+        components: { Datepicker },
         setup() {
             const { loginWithRedirect, user, isAuthenticated } = useAuth0();
             
@@ -132,7 +147,9 @@
                 selected: '',
                 maxLocAlert: false,
                 dupAlert: false,
-                emptyAlert: false
+                emptyAlert: false,
+                date: null,
+                time: null
             };
         },
         methods: {
