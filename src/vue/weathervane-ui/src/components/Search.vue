@@ -60,24 +60,34 @@
         </ul>
       </div>
       <br>
-      <v-row>
-        <v-col></v-col>
+      <v-row class="mx-2">
+        <v-col align="end">
+          <v-icon icon="mdi-calendar" />
+        </v-col>
         <v-col>
           <Datepicker
             v-model="date"
             placeholder="Select Date"
             showNowButton nowButtonLabel="Now"
             @update:alue="handleDate"
+            @closed="checkDateNotNull"
             :minDate= "new Date()"
             :maxDate="new Date(new Date().setDate(new Date().getDate() + 7))"
             :enableTimePicker="false"
           >
           </Datepicker>
         </v-col>
+        <v-col></v-col>
+      </v-row>
+      <v-row class="mx-2">
+        <v-col align="end">
+          <v-icon icon="mdi-clock" />
+        </v-col>
         <v-col>
           <Datepicker
             v-model="time"
             timePicker
+            hideInputIcon
             modeHeight="120"
             placeholder="Select Time (Optional)"
           >
@@ -124,12 +134,17 @@
         setup() {
             const { loginWithRedirect, user, isAuthenticated } = useAuth0();
 
+            const alertFn = () => {
+              alert('Menu closed');
+            }
+
             return {
                 login: () => {
                     loginWithRedirect();
                 },
                 user,
                 isAuthenticated,
+                alertFn
             };
         },
         data() {
@@ -230,6 +245,11 @@
                   date = this.date;
                 }
                 return date;
+            },
+            checkDateNotNull() {
+              if (this.date == null) {
+                alert("Please enter/select date before proceeding");
+              }
             }
 
         },
