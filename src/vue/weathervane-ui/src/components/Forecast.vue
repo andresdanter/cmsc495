@@ -72,9 +72,7 @@
                 forecast: [],
                 address: '', 
                 date: '', 
-                datePassed: '',
-                time: '',
-                timePassed: ''
+                datePassed: ''
             };
         },
         methods: {
@@ -93,12 +91,8 @@
         },
         created: function() {
             this.address = this.$route.params.address;
-            this.date = moment(String(this.$route.params.date)).format('MM/DD/YYYY');
+            this.date = moment(String(this.$route.params.date)).format('MM/DD/YYYY hh:mm:ss');
             this.datePassed = this.$route.params.datePassed;
-            this.time = moment(String(this.$route.params.time)).format('hh:mm:ss');
-            this.timePassed = this.$route.params.timePassed;
-            console.log(this.date);
-            console.log(this.time);
             this.getForecast();
         }
     };

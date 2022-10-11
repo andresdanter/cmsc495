@@ -92,13 +92,19 @@
             showNowButton nowButtonLabel="Now"
             @update:modelValue="handleDate"
             :minDate= "new Date()"
-            :maxDate="new Date(new Date().setDate(new Date()))"
+            :maxDate="new Date(new Date().setDate(new Date().getDate() + 7))"
             :enableTimePicker="false"
           >
           </Datepicker>
         </v-col>
         <v-col>
-          <Datepicker v-model="time" timePicker modeHeight="120" placeholder="Select Time (Optional)"/>
+          <Datepicker
+            v-model="time"
+            timePicker
+            modeHeight="120"
+            placeholder="Select Time (Optional)"
+          >
+          </Datepicker>
         </v-col>
         <v-col></v-col>
       </v-row>
@@ -137,21 +143,13 @@
         components: { Datepicker },
         setup() {
             const { loginWithRedirect, user, isAuthenticated } = useAuth0();
-            const date = ref(new Date());
-            const datePassed = ref(false);
 
-            const handleDate = (modelData) => {
-              datePassed.value = true;
-              date.value = modelData;
-            }
-            
             return {
                 login: () => {
                     loginWithRedirect();
                 },
                 user,
                 isAuthenticated,
-                datePassed
             };
         },
         data() {
@@ -165,6 +163,8 @@
                 maxLocAlert: false,
                 dupAlert: false,
                 emptyAlert: false,
+                datePassed: false,
+                date: null,
                 time: null
             };
         },
@@ -204,18 +204,31 @@
             },
             executeForecast(){
                 console.log(this.date);
+                console.log(this.time);
+                var date = new Date(this.date.getFullYear(),
+                                    this.date.getMonth(),
+                                    this.date.getDate(),
+                                    this.time.hours,
+                                    this.time.minutes,
+                                    this.time.seconds);
                 if (this.datePassed) {
-                  this.$router.push("forecast/" + this.addressesString + '/' + this.date + '/true')
+                  this.$router.push("forecast/" + this.addressesString + '/' + date + '/true')
                 } else {
-                  this.$router.push("forecast/" + this.addressesString + '/' + this.date + '/false')
+                  this.$router.push("forecast/" + this.addressesString + '/' + date + '/false')
                 }
             },
             executeTravelcast() {
                 console.log(this.addressesString);
+                var date = new Date(this.date.getFullYear(),
+                                    this.date.getMonth(),
+                                    this.date.getDate(),
+                                    this.time.getHours(),
+                                    this.time.getMinutes(),
+                                    this.time.getSeconds());
                 if(this.datePassed) {
-                  this.$router.push("travelcast/" + this.addressesString + '/' + this.date + '/true')
+                  this.$router.push("travelcast/" + this.addressesString + '/' + date + '/true')
                 } else {
-                  this.$router.push("travelcast/" + this.addressesString + '/' + this.date + '/false')
+                  this.$router.push("travelcast/" + this.addressesString + '/' + date + '/false')
                 }
             },
             executeOption() {
@@ -235,13 +248,16 @@
             },
             routeToUser() {
                 this.$router.push({path: '/user'});
+            },
+            handleDate() {
+                this.datePassed = true;
             }
         },
     };
 </script>
 
 <style scoped>
-    /deep/ .v-text-field{
+    /deep/ .v-text-field {
         width: 500px;
     }
 </style>
