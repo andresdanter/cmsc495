@@ -71,7 +71,6 @@
             showNowButton nowButtonLabel="Now"
             hideInputIcon
             @update:alue="handleDate"
-            @closed="checkDateNotNull"
             :minDate= "new Date()"
             :maxDate="new Date(new Date().setDate(new Date().getDate() + 7))"
             :enableTimePicker="false"
@@ -215,18 +214,15 @@
                 }
             },
             executeOption() {
-                var proceed = this.checkDateNotNull();
-                if (proceed) {
-                    switch(this.selected) {
-                        case 'Forecast':
-                            this.executeForecast();
-                            break;
-                        case 'Travelcast':
-                            this.executeTravelcast();
-                            break;
-                        default:
-                            console.log("No option selected");
-                    }
+                switch(this.selected) {
+                    case 'Forecast':
+                        this.executeForecast();
+                        break;
+                    case 'Travelcast':
+                        this.executeTravelcast();
+                        break;
+                    default:
+                        alert("No option selected");
                 }
             },
             removeLocation(index) {
