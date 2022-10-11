@@ -48,10 +48,7 @@ def forecast():
     date = request.args.get('date', None)
     datePassed = request.args.get('datePassed', None)
 
-    if datePassed == 'false':
-        forecast = getForecast(address, None)
-    else:
-        forecast = getForecast(address, date)
+    forecast = getForecast(address, date)
     print(forecast) 
     return jsonify(forecast)
 

@@ -15,7 +15,7 @@
       <v-card class="mx-auto" max-width="500" v-if="addresses.length" style="text-align: left;">
         <v-list v-for="address in addresses" :key="address" @click="selectAddress(address)">{{address}}</v-list>
       </v-card>
-      <v-btn color="secondary" size="small" @click="addAddress()">Add Address</v-btn>
+      <v-btn color="secondary" size="small" @click="addAddress()">Add Location</v-btn>
       <v-dialog v-model="maxLocAlert">
         <v-card>
           <v-card-text class="text-center">
@@ -215,15 +215,18 @@
                 }
             },
             executeOption() {
-                switch(this.selected) {
-                    case 'Forecast':
-                        this.executeForecast();
-                        break;
-                    case 'Travelcast':
-                        this.executeTravelcast();
-                        break;
-                    default:
-                        console.log("No option selected");
+                var proceed = this.checkDateNotNull();
+                if (proceed) {
+                    switch(this.selected) {
+                        case 'Forecast':
+                            this.executeForecast();
+                            break;
+                        case 'Travelcast':
+                            this.executeTravelcast();
+                            break;
+                        default:
+                            console.log("No option selected");
+                    }
                 }
             },
             removeLocation(index) {
@@ -250,7 +253,9 @@
             checkDateNotNull() {
               if (this.date == null) {
                 alert("Please enter/select date before proceeding");
+                return false;
               }
+              return true;
             }
 
         },

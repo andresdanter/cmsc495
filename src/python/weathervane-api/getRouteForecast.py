@@ -11,9 +11,14 @@ import dateutil.parser
 API_KEY = os.getenv('WEATHER_API_KEY')
 logging.basicConfig(level=logging.INFO)
 
-#       getRouteForecast Outputs the series of different forecasts to be experienced along the drive.
-#       the route parameter is taken from the getDirections function dictionary result ['result']
+"""
+- getRouteForecast -
+Outputs the series of different forecasts to be experienced along the drive.
+the route parameter is taken from the getDirections function dictionary result
 
+Authors: Group 1
+Class: CMSC495
+"""
 #       State to abbreviation dictionary
 us_state_to_abbrev = {
         "Alabama": "AL",
@@ -75,40 +80,62 @@ us_state_to_abbrev = {
         "U.S. Virgin Islands": "VI",
 }
 
-#       Returns Fahrenheit degrees from Kelvin
 def kelvinToFahrenheit(k):
+    """
+    Converts Kelvin to Fahrenheit
+
+    k: temperature in Kelvin
+    """
     return k * 1.8 - 459.67
 
-#       Gets weather conditions of time closest to date d
-def getNearestDate(d, date):
+def getNearestDate(weatherData, date):
+    """
+    Get weather conditions of time closest to date
+
+    weatherData: dictionary containing weather data of interest
+    date: date used to find beginning of data
+
+    Returns dictionary of weather data for approximate date
+    """
     temp = {}
     temp_time_diff = datetime.timedelta(days=1)
-    for i in d['list']:
-        timestamp = i['dt']
+    for item in weatherData['list']:
+        timestamp = item['dt']
         date_compare = datetime.datetime.fromtimestamp(timestamp)
         
         if date_compare > date and date_compare - date < temp_time_diff:
-            temp = i
+            temp = item
             temp_time_diff = date_compare - date_compare
         if date >= date_compare and date - date_compare < temp_time_diff:
-            temp = i
+            temp = item
             temp_time_diff = date - date_compare
     
     return temp
 
-#       Turns Lat / Long into approximate city
 def parseLatLong(lat, long):
+    """
+    Converts latitude and longitude into approximate city
+
+    lat:
+    long:
+    """
     url = 'http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API}'
     url = url.format(lat=lat, lon=long, limit = 5, API=API_KEY)
     response = requests.get(url)
     json_data = response.json()
     logging.debug(f"Possible locations to parse: {json_data}")
-    city = json_data[0]['name']
-    state = json_data[0]['state']
-    return f"{city}, {us_state_to_abbrev.get(state)}"
+    if json_data:
+        city = json_data[0]['name']
+        state = json_data[0]['state']
+        return f"{city}, {us_state_to_abbrev.get(state)}"
+    else:
+        return ""
 
-#       Turns OpenWeatherAPI weather condition to a usable weather format
 def parseWeather(weather, spec):
+    """
+    weather:
+    spec:
+    """
     if weather == 'Thunderstorm':
         if spec == 'thunderstorm with light rain' or spec == 'light thunderstorm' or spec == 'ragged thunderstorm' or spec == 'thunderstorm with light drizzle':
             return 'Thunderstorm', 'Light'
@@ -158,9 +185,13 @@ def parseWeather(weather, spec):
         return 'Atmospheric Conditions', 'Light'
         
 
-#       Gets aggregated weather conditions upon route (aggregated by weather)
-#       Using 3-hour forecast until API access is approved
 def getTravelcast(route):
+    """
+    Gets aggregated weather conditions upon route (aggregated by weather)
+    Using 3-hour forecast until API access is approved
+    
+    route:
+    """
     results = []
     temp_weather_cond = ''
     temp_weather_name = ''
@@ -206,14 +237,23 @@ def getTravelcast(route):
         'Forecast': pw_sev + ' ' + pw_name
     })
     
-    #print(results)
     return results
 
-#       Will return daily forecast for the next 7 days
 def getForecast(address, start_date):
+    """
+    Will return daily forecast for the next 7 days
+
+    address:
+    start_date:
+    """
     results = []
     retag_mapping = { "PlaceName": "city", "StateName": "state" }
-    parsed_address = usaddress.tag(address, retag_mapping)
+    try:
+        parsed_address = usaddress.tag(address, retag_mapping)
+    except usaddress.RepeatedLabelError as 
+        logging.error(f"Unable to parse {address}: {e}")
+        raise
+
     logging.debug(f"Parsed address: {parsed_address}")
 
     city = parsed_address[0].get('city')
@@ -225,9 +265,8 @@ def getForecast(address, start_date):
     json_data = response.json()
     lat = json_data[0]['lat']
     long = json_data[0]['lon']
-    #start_date = start_date.strftime('%-d-%b')
     count = 0
-    
+    logging.info(f"Date: {start_date}")
     if start_date is None:
         url = 'http://api.openweathermap.org/data/2.5/forecast/daily?lat={lat}&lon={lon}&cnt={cnt}&appid={API}'
         url = url.format(lat=lat, lon=long, cnt = 16, API=API_KEY)
