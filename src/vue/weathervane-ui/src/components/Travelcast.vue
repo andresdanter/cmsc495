@@ -1,3 +1,11 @@
+<!--
+Travelcast component which defines the content served via the /travelcast route
+
+Weather Vane Application
+Course: CMSC495
+Group 1
+-->
+
 <template>
     <div class="MyTravelcast"> 
         <WVBanner />

@@ -1,3 +1,11 @@
+<!--
+Search component which defines the content served via the main root (/) route
+
+Weather Vane Application
+Course: CMSC495
+Group 1
+-->
+
 <template>
   <WVBanner />
   <div class="MySearch"> 

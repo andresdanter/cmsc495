@@ -1,3 +1,11 @@
+<!--
+Banner component with defines a reusable banner for the Weather Vane UI
+
+Weather Vane Application
+Course: CMSC495
+Group 1
+-->
+
 <template>
   <v-banner>
     <v-row align="left" justify="left" v-bind:style="{ height: deviceHeight * 0.6 + 'px',}"> 

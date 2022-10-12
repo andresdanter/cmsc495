@@ -16,8 +16,9 @@ logging.basicConfig(level=logging.INFO)
 Outputs the series of different forecasts to be experienced along the drive.
 the route parameter is taken from the getDirections function dictionary result
 
-Authors: Group 1
-Class: CMSC495
+Weather Vane Application
+Course: CMSC495
+Group 1
 """
 #       State to abbreviation dictionary
 us_state_to_abbrev = {

@@ -1,3 +1,10 @@
+<!--
+Logout component which defines the content served via the /logout route.
+
+Weather Vane Application
+Course: CMSC495
+Group 1
+-->
 <template>
     <div class="MyLogout"> 
         <WVBanner />

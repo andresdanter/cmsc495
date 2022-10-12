@@ -1,3 +1,5 @@
+# Dockerfile for Weather Vane backend API application
+
 FROM node:lts-alpine as builder
 
 WORKDIR /app

@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
+"""
+Main Flask application entrypoint and route definition.
+
+Weather Vane Application
+Course: CMSC495
+Group 1
+"""
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from uuid import uuid4
@@ -15,25 +22,12 @@ app = Flask(__name__)
 CORS(app,resources={r"/api": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/authToken')
-def authToken():
-    username = request.args.get('username', None)
-    password = request.args.get('password', None)
-    
-    ### Check user / pass against mySQL database
-    
-    if True:
-        rand_token = uuid4()
-        ### Update database with randToken and token expiration
-        return rand_token
-    elif username == None or password == None:
-        abort(400)
-    else:
-        abort(404)
-
 @app.route('/addressSuggestions', methods = ['GET'])
 @cross_origin(origin='*',headers=['content-type'])
 def addressSuggestions():
+    """
+    Handler for /addressSuggestions endpoint. Returns 
+    """
     try:
         address = request.args.get('address', None)
         return jsonify(get_autocomplete(address))
